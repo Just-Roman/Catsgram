@@ -12,4 +12,5 @@ public class Post {
     long authorId;
     String description;
     Instant postDate;
+
 }
