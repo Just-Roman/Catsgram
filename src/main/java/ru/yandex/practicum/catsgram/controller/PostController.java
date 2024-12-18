@@ -1,5 +1,6 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.Post;
@@ -29,12 +30,12 @@ public class PostController {
     }
 
     @PostMapping
-    public Post create(@RequestBody Post post) {
+    public Post create(@Valid @RequestBody Post post) {
         return postService.create(post);
     }
 
     @PutMapping
-    public Post update(@RequestBody Post newPost) {
+    public Post update(@Valid @RequestBody Post newPost) {
         return postService.update(newPost);
     }
 }

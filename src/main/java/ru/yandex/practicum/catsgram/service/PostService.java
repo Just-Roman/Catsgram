@@ -41,17 +41,10 @@ public class PostService {
     }
 
     public Post create(Post post) {
-        if (post.getDescription() == null || post.getDescription().isBlank()) {
-            throw new ConditionsNotMetException("Описание не может быть пустым");
-        }
-        if (post.getAuthorId() == null) {
-            throw new ConditionsNotMetException("id автора не может быть пустым");
-        }
         Long authorId = post.getAuthorId();
         if (userService.findUserById(authorId).isEmpty()) {
             throw new ConditionsNotMetException("Автор с id = " + authorId + " не найден");
         }
-
         post.setId(getNextId());
         post.setPostDate(Instant.now());
         posts.put(post.getId(), post);
@@ -64,9 +57,6 @@ public class PostService {
         }
         if (posts.containsKey(newPost.getId())) {
             Post oldPost = posts.get(newPost.getId());
-            if (newPost.getDescription() == null || newPost.getDescription().isBlank()) {
-                throw new ConditionsNotMetException("Описание не может быть пустым");
-            }
             oldPost.setDescription(newPost.getDescription());
             return oldPost;
         }

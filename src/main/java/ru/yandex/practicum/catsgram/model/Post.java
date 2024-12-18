@@ -1,8 +1,9 @@
 package ru.yandex.practicum.catsgram.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.lang.NonNull;
 
 import java.time.Instant;
 
@@ -10,8 +11,11 @@ import java.time.Instant;
 @EqualsAndHashCode(of = {"id"})
 public class Post {
     Long id;
+    @NotNull
     Long authorId;
     Instant postDate;
+    @NotNull
+    @NotBlank
     String description;
 
 }

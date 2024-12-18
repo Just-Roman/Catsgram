@@ -42,10 +42,6 @@ public class UserService {
 
     public User create(User user) {
         String newEmail = user.getEmail();
-        // проверяем выполнение необходимых условий
-        if (newEmail == null || newEmail.isBlank()) {
-            throw new ConditionsNotMetException("Описание не может быть пустым");
-        }
         for (User userMap : users.values()) {
             if (userMap.getEmail().equals(newEmail)) {
                 throw new DuplicatedDataException("Этот имейл уже используется");
