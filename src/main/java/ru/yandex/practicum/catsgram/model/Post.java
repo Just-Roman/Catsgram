@@ -2,6 +2,7 @@ package ru.yandex.practicum.catsgram.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.lang.NonNull;
 
 import java.time.Instant;
 
@@ -9,8 +10,8 @@ import java.time.Instant;
 @EqualsAndHashCode(of = {"id"})
 public class Post {
     Long id;
-    long authorId;
-    String description;
+    Long authorId;
     Instant postDate;
+    String description;
 
 }
