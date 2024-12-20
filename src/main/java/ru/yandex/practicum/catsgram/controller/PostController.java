@@ -1,13 +1,13 @@
 package ru.yandex.practicum.catsgram.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
@@ -20,8 +20,10 @@ public class PostController {
     }
 
     @GetMapping
-    public Collection<Post> getAll() {
-        return postService.getAll();
+    public Collection<Post> getAll(@RequestParam(defaultValue = "0") Integer from,
+                                   @RequestParam(defaultValue = "10") @Positive Integer size,
+                                   @RequestParam(defaultValue = "desc") String sort) {
+        return postService.getAll(from, size, sort);
     }
 
     @GetMapping("/{postId}")

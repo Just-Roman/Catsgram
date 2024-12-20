@@ -7,10 +7,8 @@ import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 // Указываем, что класс PostService - является бином и его
 // нужно добавить в контекст приложения
@@ -20,14 +18,40 @@ public class PostService {
 
     private final Map<Long, Post> posts = new HashMap<>();
 
+
     @Autowired
     public PostService(UserService userService) {
         this.userService = userService;
     }
 
-    public Collection<Post> getAll() {
-        return posts.values();
+    public Collection<Post> getAll(Integer from, Integer size, String sort) {
+        List<Post> sortedPosts = posts.values().stream()
+                .sorted(Comparator.comparing(Post::getPostDate))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        if (getTypeSort(sort).equals("DESCENDING")) {
+            sortedPosts = sortedPosts.reversed();
+        }
+        List<Post> returnablePost = new ArrayList<>();
+
+        for (int i = from; i < from + size; i++) {
+            if (sortedPosts.size() < i + 1) break;
+            returnablePost.add(sortedPosts.get(i));
+        }
+        return returnablePost;
+
     }
+
+
+    private String getTypeSort(String sort) {
+        return switch (sort.toLowerCase()) {
+            case "ascending", "asc" -> "ASCENDING";
+            case "descending", "desc" -> "DESCENDING";
+            default -> throw new ConditionsNotMetException("Допустимые варианты сортировки: " +
+                    "asc(ascending), desc(descending)");
+        };
+    }
+
 
     public Post getPostById(Long id) {
         if (id == null) {
