@@ -3,6 +3,7 @@ package ru.yandex.practicum.catsgram.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
@@ -31,6 +32,7 @@ public class PostController {
         return postService.getPostById(postId);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Post create(@Valid @RequestBody Post post) {
         return postService.create(post);

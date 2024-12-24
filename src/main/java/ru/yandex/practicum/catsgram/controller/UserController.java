@@ -2,6 +2,7 @@ package ru.yandex.practicum.catsgram.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
@@ -28,6 +29,7 @@ public class UserController {
        return userService.getUserById(userId);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public User create(@Valid @RequestBody User user) {
         return userService.create(user);
