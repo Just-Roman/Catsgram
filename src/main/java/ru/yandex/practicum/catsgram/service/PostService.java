@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
+import ru.yandex.practicum.catsgram.exception.ParameterNotValidException;
 import ru.yandex.practicum.catsgram.model.Post;
 
 import java.time.Instant;
@@ -34,6 +35,15 @@ public class PostService {
         }
         List<Post> returnablePost = new ArrayList<>();
 
+        if (size < 0) {
+            throw new ParameterNotValidException("error : " + size,
+                    " Некорректный размер выборки. Размер должен быть больше нуля");
+        }
+        if (from < 0) {
+            throw new ParameterNotValidException("error : " + from,
+                    " Некорректный размер выборки. Начало должно быть больше нуля");
+        }
+
         for (int i = from; i < from + size; i++) {
             if (sortedPosts.size() < i + 1) break;
             returnablePost.add(sortedPosts.get(i));
@@ -47,8 +57,8 @@ public class PostService {
         return switch (sort.toLowerCase()) {
             case "ascending", "asc" -> "ASCENDING";
             case "descending", "desc" -> "DESCENDING";
-            default -> throw new ConditionsNotMetException("Допустимые варианты сортировки: " +
-                    "asc(ascending), desc(descending)");
+            default -> throw new ParameterNotValidException("error : " + sort,
+                    " Допустимые варианты сортировки: asc(ascending), desc(descending)");
         };
     }
 
