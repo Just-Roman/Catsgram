@@ -35,9 +35,9 @@ public class UserService {
 
     Optional<User> findUserById(Long id) {
         if (id == null) {
-            throw new NotFoundException("Поле id = null" );
+            throw new NotFoundException("Поле id = null");
         }
-            return Optional.ofNullable(users.get(id));
+        return Optional.ofNullable(users.get(id));
     }
 
     public User create(User user) {

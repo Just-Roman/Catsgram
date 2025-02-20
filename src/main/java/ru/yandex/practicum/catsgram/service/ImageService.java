@@ -27,7 +27,7 @@ public class ImageService {
     private final PostService postService;
 
     @Value("${catsgram.image-directory}")
-    private final String imageDirectory; // = "C:\\Users\\romke\\IdeaProjects\\imageDirectory";
+    private static final String imageDirectory = System.getProperty("user.dir");
     private final Map<Long, Image> images = new HashMap<>();
 
     // сохранение файла изображения

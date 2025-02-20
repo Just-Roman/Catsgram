@@ -1,6 +1,6 @@
 package ru.yandex.practicum.catsgram.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
@@ -13,17 +13,12 @@ import java.util.stream.Collectors;
 
 // Указываем, что класс PostService - является бином и его
 // нужно добавить в контекст приложения
+@RequiredArgsConstructor
 @Service
 public class PostService {
     private final UserService userService;
 
     private final Map<Long, Post> posts = new HashMap<>();
-
-
-    @Autowired
-    public PostService(UserService userService) {
-        this.userService = userService;
-    }
 
     public Collection<Post> getAll(Integer from, Integer size, String sort) {
         List<Post> sortedPosts = posts.values().stream()
